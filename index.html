@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>tvticker</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type='text/javascript' src="/static/jquery.simplemodal.1.4.2.min.js"></script>
+    <script type='text/javascript' src="/static/code.js"></script>
+    <link type="text/css" rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <div class="login">
+        {% if user %}
+            <a href="/logout">Logout</a> (logged in as {{ user }})
+            <script type="text/javascript">
+            {% for show in shows %}
+                addShow({{ show }});
+            {% endfor %}
+            </script>
+        {% else %}
+            <a href="/login">Login to save your shows</a>
+        {% endif %}
+    </div>
+    <div class="search_area">
+        <label for="txtTvShowName">TV show name: </label>
+        <input type="textbox" id="txtTvShowName" />
+        <button id="btnSearch">Search</button>
+        <img id="imgAjaxLoaderSearch" style="display:none" src="/static/ajax-loader.gif" />
+    </div>
+    <div id="modal-content">
+        <div class="modal-inner">
+            <div class="choose">Choose a show to add:</div>
+            <div class="close"><a href="#" class="simplemodal-close">Close</a></div>
+            <div id="modal-inner-content"></div>
+        </div>
+    </div>
+    <div id="shows_container">
+        <div id="show_template" class="show" style="display:none;">
+            <div class="title_container">
+                <h2 class="title"></h2>
+                <div class="remove_button"><a href="#"><img src="/static/delete-icon.png" alt="remove" width="20px"/></a></div>
+            </div>
+        </div>
+        <div id="episode_template" class="episode" style="display:none;">
+            <hr/>
+            <div class="ep_data_top">
+                <span class="title"></span>
+                <span class="date"></span>
+            </div>
+            <div class="ep_data_bottom">
+                <div class="season_and_episode"></div>
+                <div class="rating"></div>
+            </div>
+            <div class="overview"></div>
+        </div>
+    </div>
+</body>
+</html>

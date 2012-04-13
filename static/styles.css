@@ -1,0 +1,89 @@
+* {
+    font-family:Arial;
+}
+.login {
+    padding-bottom:10px;
+}
+.login a {
+    color:blue;
+}
+.search_area label {
+    font-weight:bold;
+    font-size:16px;
+}
+.search_area input {
+    border:1px solid black;
+    padding:3px;
+    font-size:14px;
+    width:300px;
+}
+#shows_container {
+    margin-top:10px;
+}
+.show {
+    border:1px solid black;
+    width:300px;
+    height:850px;
+    overflow-y:scroll;
+    padding:10px;
+    float:left;
+    margin-right:10px;
+}
+.show .title_container {
+    overflow:auto;
+}
+.show .remove_button {
+    float:right;
+}
+.show .title {
+    margin:0;
+    float:left;
+}
+.show .episode {
+    font-size:13px;
+}
+.show .episode .ep_data_top {
+    overflow:auto;
+}
+.show .episode .ep_data_top .title {
+    float:left;
+    font-weight:bold;
+}
+.show .episode .ep_data_top .date {
+    float:right;
+    color:gray;
+}
+.show .episode .ep_data_bottom {
+    overflow:auto;
+    color:gray;
+}
+.show .episode .ep_data_bottom .season_and_episode {
+    float:left;
+    color:gray;
+}
+.show .episode .ep_data_bottom .rating {
+    float:right;
+    color:gray;
+}
+.show .episode .overview {
+    font-size:12px;
+    padding-top:5px;
+}
+
+/* modal */
+#modal-content, #modal-data {display:none;}
+.modal-inner {margin:20px 10px;}
+#modal-inner-content {height:240px; overflow-y:scroll;}
+#modal-content a {color:blue;}
+#overlay {background-color:#000; cursor:wait;}
+#container {background-color:#eee; color:#000; font: 16px/24px "Lucida Grande",Arial,sans-serif; padding-bottom:4px; width:600px; -moz-border-radius-bottomleft:6px; -webkit-border-bottom-left-radius:6px; -moz-border-radius-bottomright:6px; -webkit-border-bottom-right-radius:6px; border-radius:0 0 6px 6px; -moz-box-shadow:0 0 64px #000; -webkit-box-shadow:0 0 64px #000; box-shadow:0 0 64px #000;}
+#container a {color:gray;}
+#container #modal-title {color:#000; background-color:#ddd; border-bottom:1px solid #ccc; font-weight:bold; padding:6px 8px; text-shadow:0 1px 0 #f4f4f4;}
+#container .close {display:none; position:absolute; right:0; top:0;}
+#container .choose {padding-bottom:5px;}
+#container .close a {display:block; color:#777; font-weight:bold; padding:6px 12px 0; text-decoration:none; text-shadow:0 1px 0 #f4f4f4;}
+#container .close a:hover {color:#000;}
+#container #modal-data {font-size:12px; padding:6px 12px;}
+#container h2 {margin:10px 0 6px;}
+#container p {margin-bottom:10px;}
+#container span {color:#777;}
