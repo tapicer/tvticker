@@ -129,25 +129,32 @@ function addShow(id, elem) {
                     .removeAttr('id')
                     .appendTo(show);
                 
-                $('.title', episode).html(episode_data.title);
-                $('.date', episode).html(episode_data.air_date);
-                var season_and_episode = 'S';
-                if (episode_data.season_number < 10) {
-                    season_and_episode += '0' + episode_data.season_number.toString();
+                if (episode_data.episode_id != -1) {
+                    $('.title', episode).html(episode_data.title);
+                    $('.date', episode).html(episode_data.air_date);
+                    var season_and_episode = 'S';
+                    if (episode_data.season_number < 10) {
+                        season_and_episode += '0' + episode_data.season_number.toString();
+                    } else {
+                        season_and_episode += episode_data.season_number.toString();
+                    }
+                    season_and_episode += 'E';
+                    if (episode_data.episode_number < 10) {
+                        season_and_episode += '0' + episode_data.episode_number.toString();
+                    } else {
+                        season_and_episode += episode_data.episode_number.toString();
+                    }
+                    $('.season_and_episode', episode).html(season_and_episode);
+                    if (episode_data.rating) {
+                        $('.rating', episode).html('Rating: ' + episode_data.rating.toString());
+                    }
+                    $('.overview', episode).html(episode_data.overview);
                 } else {
-                    season_and_episode += episode_data.season_number.toString();
+                    $('.ep_data_top', episode).html('All episodes up to this day have already aired.');
+                    episode.addClass('today');
+                    $('.ep_data_bottom', episode).remove();
+                    $('.overview', episode).remove();
                 }
-                season_and_episode += 'E';
-                if (episode_data.episode_number < 10) {
-                    season_and_episode += '0' + episode_data.episode_number.toString();
-                } else {
-                    season_and_episode += episode_data.episode_number.toString();
-                }
-                $('.season_and_episode', episode).html(season_and_episode);
-                if (episode_data.rating) {
-                    $('.rating', episode).html('Rating: ' + episode_data.rating.toString());
-                }
-                $('.overview', episode).html(episode_data.overview);
             }
             
             $('#imgAjaxLoaderSearch').hide();

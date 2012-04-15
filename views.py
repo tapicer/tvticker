@@ -98,8 +98,20 @@ class ShowData(webapp.RequestHandler):
         
         episodes_for_response = []
         
+        today_episode_added = False
         for episode in episodes:
             if episode.season_number > 0:
+                if episode.air_date < datetime.date.today() and not today_episode_added:
+                    episodes_for_response.append({
+                            'episode_id': -1,
+                            'title': 'TODAY',
+                            'overview': '',
+                            'air_date': '',
+                            'season_number': 0,
+                            'episode_number': 0,
+                            'rating': 0,
+                        })
+                    today_episode_added = True
                 episodes_for_response.append({
                         'episode_id': episode.episode_id,
                         'title': episode.title,
