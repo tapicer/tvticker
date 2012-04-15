@@ -1,4 +1,4 @@
-tvticker is A TV shows customizable list that shows all the episodes of your chosen shows.
+tvticker is A TV shows customizable interface that lists all the episodes of your chosen shows.
 
 It is written in Python to run on the Google App Engine.
 
