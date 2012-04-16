@@ -18,7 +18,7 @@ $(function() {
                         shows = [shows];
                     }
                     for (var i = 0; i < shows.length; i++) {
-                        html += '<div><a href="javascript:void(null)" onclick="addShow(' + shows[i].id + ', this)">' + shows[i].SeriesName + '</a></div>';
+                        html += '<div><a href="javascript:void(null)" onclick="addShow(' + shows[i].id + ', \'last\', this)">' + shows[i].SeriesName + '</a></div>';
                     }
                 } else {
                     html = 'No shows found';
@@ -29,6 +29,27 @@ $(function() {
     
     // start focus on tv show search
     $('#txtTvShowName').focus();
+    
+    // make shows sortable
+    $('#shows_container').sortable({
+        placeholder: 'show show_placeholder',
+        handle: '.move_button',
+        stop: function() {
+            // update order and save
+            var shows = $('.show').not('#show_template');
+            var shows_ids = []
+            var orders = []
+            for (var i = 0; i < shows.length; i++) {
+                $(shows[i]).data('order', i + 1);
+                shows_ids.push($(shows[i]).data('id'));
+                orders.push(i + 1);
+            }
+            shows_ids = shows_ids.join(',');
+            orders = orders.join(',');
+            var shows_and_orders = shows_ids + '|' + orders;
+            $.ajax('/save_shows_orders/' + shows_and_orders);
+        }
+    });
 });
 
 // allows to make a cross-domain ajax request using YQL as a proxy
@@ -89,7 +110,10 @@ var modal = {
 };
 
 // add the show to the list
-function addShow(id, elem) {
+function addShow(id, order, elem) {
+    if (order == 'last') {
+        order = $('.show').not('#show_template').length + 1;
+    }
     $('.simplemodal-close').click();
     // check if the show is already added
     if ($('#show_' + id.toString()).length > 0) {
@@ -110,9 +134,12 @@ function addShow(id, elem) {
                 .clone()
                 .show()
                 .attr('id', 'show_' + id.toString())
+                .data('id', id)
+                .data('order', order)
                 .appendTo('#shows_container');
             
             $('.title', show).html(show_data.show_name);
+            
             // remove show event
             $('.remove_button', show).click(function() {
                     $.ajax('/remove_show/' + id.toString());
@@ -160,5 +187,14 @@ function addShow(id, elem) {
             $('#imgAjaxLoaderSearch').hide();
             $('#txtTvShowName').val('');
             $('#txtTvShowName').focus();
+            
+            // sort shows by user order
+            var elems = $('.show').not('#show_template');
+            elems.sort(function(elem1, elem2) {
+                    var ord1 = $(elem1).data('order');
+                    var ord2 = $(elem2).data('order');
+                    return ord1 > ord2 ? 1 : -1;
+                });
+            $('#shows_container').append(elems);
         });
 }

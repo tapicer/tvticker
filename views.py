@@ -16,10 +16,10 @@ class Index(webapp.RequestHandler):
         user = users.get_current_user()
         data = { 'user': user }
         if user:
-            user_shows = UserShow.gql('WHERE user = :1', str(user))
+            user_shows = UserShow.gql('WHERE user = :1 ORDER BY order', str(user))
             shows = []
             for user_show in user_shows:
-                shows.append(user_show.show_id)
+                shows.append({ 'id': user_show.show_id, 'order': user_show.order })
             data['shows'] = shows
         self.response.out.write(template.render(path, data))
 
@@ -130,6 +130,7 @@ class ShowData(webapp.RequestHandler):
                 user_show = UserShow()
                 user_show.show_id = id
                 user_show.user = str(user)
+                user_show.order = UserShow.gql('WHERE user = :1', str(user)).count() + 1
                 user_show.put()
         
         self.response.out.write(json.dumps({ 'show_name': show.name, 'episodes': episodes_for_response }))
@@ -161,3 +162,19 @@ def get_show_episodes(show_id):
     # return contents of the en.xml file
     show_data_file = zip_file.open('en.xml')
     return show_data_file.read()
+
+
+class SaveShowsOrder(webapp.RequestHandler):
+    def get(self, shows_and_orders):
+        user = users.get_current_user()
+        if user:
+            shows, orders = shows_and_orders.split('|')
+            shows = shows.split(',')
+            orders = orders.split(',')
+            i = 0
+            for show in shows:
+                user_show = UserShow.gql('WHERE show_id = :1 AND user = :2', int(show), str(user)).get()
+                if user_show:
+                    user_show.order = int(orders[i])
+                    user_show.put()
+                i += 1

@@ -29,11 +29,19 @@
     float:left;
     margin-right:10px;
 }
+.show_placeholder {
+    background:lightblue;
+    overflow-y:auto;
+}
 .show .title_container {
     overflow:auto;
 }
 .show .remove_button {
     float:right;
+}
+.show .move_button {
+    float:right;
+    margin-right:5px;
 }
 .show .title {
     margin:0;

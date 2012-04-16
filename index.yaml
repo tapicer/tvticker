@@ -23,3 +23,8 @@ indexes:
     direction: desc
   - name: episode_number
     direction: desc
+
+- kind: UserShow
+  properties:
+  - name: user
+  - name: order

@@ -4,6 +4,7 @@
     <title>tvticker</title>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type='text/javascript' src="/static/jquery-ui-1.8.18.custom.min.js"></script>
     <script type='text/javascript' src="/static/jquery.simplemodal.1.4.2.min.js"></script>
     <script type='text/javascript' src="/static/code.js"></script>
     <link type="text/css" rel="stylesheet" href="/static/styles.css" />
@@ -14,7 +15,7 @@
             <a href="/logout">Logout</a> (logged in as {{ user }})
             <script type="text/javascript">
             {% for show in shows %}
-                addShow({{ show }});
+                addShow({{ show.id }}, {{ show.order }});
             {% endfor %}
             </script>
         {% else %}
@@ -39,6 +40,7 @@
             <div class="title_container">
                 <h2 class="title"></h2>
                 <div class="remove_button"><a href="#"><img src="/static/delete-icon.png" alt="remove" width="20px"/></a></div>
+                <div class="move_button"><a href="#"><img src="/static/move-icon.png" alt="move" width="20px"/></a></div>
             </div>
         </div>
         <div id="episode_template" class="episode" style="display:none;">
